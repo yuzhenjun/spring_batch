@@ -19,11 +19,11 @@ http://www.springframework.org/schema/jdbc
 http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 
 	<bean:import resource="classpath:application.xml" />
-	
-<!-- 	 <jdbc:initialize-database data-source="bssdataSource">
+<!-- 	
+ 	 <jdbc:initialize-database data-source="bssdataSource">
 		<jdbc:script location="org/springframework/batch/core/schema-drop-mysql.sql" />
 		<jdbc:script location="org/springframework/batch/core/schema-mysql.sql" />
-	</jdbc:initialize-database> -->
+	</jdbc:initialize-databas --> 
 	
 	<job id="helloWorldJob">
 		<step id="step_hello" next="step_world">
@@ -137,7 +137,7 @@ http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
 	<bean:bean id="jdbcItemProcessor" class="com.shatacloud.batch.jdbc.JdbcItemProcessor"></bean:bean>
 	
 	<job id="jdbcJob">
-		<step id="jdbcStep"><!-- task-executor="taskExecutor" -->
+		<step id="jdbcStep">
 			<tasklet transaction-manager="transactionManager" >
 				<chunk reader="jdbcItemReader" writer="jdbcItemWriter" processor="jdbcItemProcessor" commit-interval="10000">
 				</chunk>

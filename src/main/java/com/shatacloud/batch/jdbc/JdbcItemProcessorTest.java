@@ -9,26 +9,35 @@ import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 
 
 public class JdbcItemProcessorTest {
 
-	public static void main(String[] args) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("classpath:batch.xml");
+	public static void main(String[] args) throws Exception {
+/*		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("classpath:batch.xml");
 		JobLauncher launcher = (JobLauncher) context.getBean("jobLauncher");
 		Job job = (Job) context.getBean("jdbcJob");
 		try {
-			/* 运行Job */
+			 //运行Job 
 			Map<String,JobParameter> parameters=new HashMap<String, JobParameter>();
 			parameters.put("id", new JobParameter((long) 50000));
 			JobParameters jps=new JobParameters(parameters);
 			JobExecution result = launcher.run(job,jps);
-			/* 处理结束，控制台打印处理结果 */
+			 //处理结束，控制台打印处理结果 
 			System.out.println(result.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally{
+			System.out.println("退出");
+			if (context != null) {
+				context.close();
+			}
 		}
+		*/
+		WappepCommandLine.main(new String[]{"classpath:batch.xml","jdbcJob","id=50000"});
 	}
 
 }

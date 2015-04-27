@@ -166,7 +166,6 @@ public class WappepCommandLine {
 	 */
 	@SuppressWarnings("resource")
 	int start(String jobPath, String jobIdentifier, String[] parameters, Set<String> opts) {
-
 		ConfigurableApplicationContext context = null;
 
 		try {
@@ -186,11 +185,9 @@ public class WappepCommandLine {
 
 			String jobName = jobIdentifier;
 			
-			JobParameters jobParameters = jobParametersConverter.getJobParameters(StringUtils
-					.splitArrayElementsIntoProperties(parameters, "="));
+			JobParameters jobParameters = jobParametersConverter.getJobParameters(StringUtils.splitArrayElementsIntoProperties(parameters, "="));
 			Assert.isTrue(parameters == null || parameters.length == 0 || !jobParameters.isEmpty(),
-					"Invalid JobParameters " + Arrays.asList(parameters)
-					+ ". If parameters are provided they should be in the form name=value (no whitespace).");
+					"Invalid JobParameters " + Arrays.asList(parameters)+ ". If parameters are provided they should be in the form name=value (no whitespace).");
 
 			if (opts.contains("-stop")) {
 				List<JobExecution> jobExecutions = getRunningJobExecutions(jobIdentifier);
@@ -248,17 +245,16 @@ public class WappepCommandLine {
 			System.out.println(jobExecution);
 			return exitCodeMapper.intValue(jobExecution.getExitStatus().getExitCode());
 
-		}
-		catch (Throwable e) {
+		}catch (Throwable e) {
 			String message = "Job Terminated in error: " + e.getMessage();
 			logger.error(message, e);
 			WappepCommandLine.message = message;
 			return exitCodeMapper.intValue(ExitStatus.FAILED.getExitCode());
 		}
 		finally {
-			/*if (context != null) {
+			if (context != null) {
 				context.close();
-			}*/
+			}
 		}
 	}
 
@@ -413,9 +409,7 @@ public class WappepCommandLine {
 	public static void main(String[] args) throws Exception {
 
 		WappepCommandLine command = new WappepCommandLine();
-
 		List<String> newargs = new ArrayList<String>(Arrays.asList(args));
-
 		try {
 			if (System.in.available() > 0) {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -428,8 +422,7 @@ public class WappepCommandLine {
 					line = reader.readLine();
 				}
 			}
-		}
-		catch (IOException e) {
+		}catch (IOException e) {
 			logger.warn("Could not access stdin (maybe a platform limitation)");
 			if (logger.isDebugEnabled()) {
 				logger.debug("Exception details", e);
@@ -446,8 +439,7 @@ public class WappepCommandLine {
 		for (String arg : newargs) {
 			if (VALID_OPTS.contains(arg)) {
 				opts.add(arg);
-			}
-			else {
+			}else {
 				switch (count) {
 				case 0:
 					jobPath = arg;
